@@ -1,12 +1,6 @@
 pipeline {
     agent any
-    environment {
-        MYSQL_DATABASE = 'lavajato'   // Variáveis diretamente no Jenkinsfile
-        MYSQL_USER = 'root'
-        MYSQL_PASSWORD = ''
-        DB_PORTS = "3306:3306"
-        DEPLOY_PROFILE = 'deploy' // Perfil para Deploy
-    }
+
     stages {
         stage('Verificar Repositorio') {
             steps {
@@ -23,7 +17,7 @@ pipeline {
         stage('Construir Imagem Docker') {
             steps {
                 script {
-                    def appName = 'lavajatoApp'
+                    def appName = 'emissorMicroservicoApp'
                     def imageTag = "${appName}:${env.BUILD_ID}"
                     bat "docker build --build-arg SPRING_PROFILES_ACTIVE=${DEPLOY_PROFILE} -t ${imageTag} ."
                 }
@@ -33,7 +27,7 @@ pipeline {
         stage('Fazer Deploy') {
             steps {
                 script {
-                    def appName = 'lavajatoApp'
+                    def appName = 'emissorMicroservicoApp'
                     def imageTag = "${appName}:${env.BUILD_ID}"
                     bat "docker stop ${appName} || exit 0"
                     bat "docker rm ${appName} || exit 0"

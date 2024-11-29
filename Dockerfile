@@ -21,7 +21,7 @@ WORKDIR /emissorMicroservico
 COPY --from=build /emissorMicroservico/target/*.jar emissorMicroservico.jar
 
 # Exponha a porta que a aplicação vai usar
-EXPOSE 8080
+EXPOSE 8081
 
 # Comando para rodar a aplicação
 ENTRYPOINT ["java", "-jar", "emissorMicroservico.jar"]
